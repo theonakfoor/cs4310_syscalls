@@ -4,7 +4,8 @@ import sys
 
 if __name__ == "__main__":
 
-    iterations = 25
+    iterations = 100
+    times = []
 
     print("")
     print("CS4310 Final Project")
@@ -48,16 +49,16 @@ if __name__ == "__main__":
         match choice.lower():
             case "1":
                 # Process Creation
-                pass
+                binary_path = "binaries/process_creation_windows"
             case "2":
-                # File I/O
-                pass
+                # Process Priority
+                binary_path = "binaries/set_priority_windows"
             case "3":
-                # Memory management
-                pass
+                # Get current PID
+                binary_path = "binaries/get_pid_windows"
             case "4":
-                # Waiting
-                pass
+                # Yield CPU
+                binary_path = "binaries/yield_windows"
             case _:
                 print("Invalid menu option selected!")
                 exit(0)
@@ -66,18 +67,22 @@ if __name__ == "__main__":
         exit(0)
 
     print("")
-    start_ns = time.perf_counter()
     for i in range(iterations):
+        start = time.perf_counter()
         result = subprocess.run(
             [binary_path],
             stdout=sys.stdout,
         )
-    end_ns = time.perf_counter()
+        end = time.perf_counter()
+        times.append(end - start)
+
     print("")
-    elapsed = end_ns - start_ns
+    elapsed = sum(times)
+    average = sum(times)/len(times)
 
     print("")
     print("Benchmark Results")
     print(f"Total time:\t{elapsed:.6f}s for {iterations} iterations")
-    print(f"Average time:\t{(elapsed/iterations):.6f}s per execution")
+    print(f"Average time:\t{average:.6f}s per execution")
     print("")
+    print(times)
