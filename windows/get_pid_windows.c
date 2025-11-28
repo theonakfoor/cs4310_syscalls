@@ -4,7 +4,7 @@
 
 int main(int argc, char **argv) {
     // Perform GetCurrentProcessId syscall
-    DWORD pid = GetCurrentProcessId();
+    volatile DWORD pid = GetCurrentProcessId();
     // Print PID
     printf("Process ID: %d\n", pid);
     
